@@ -37,64 +37,104 @@ function Login(props) {
 
     return (
         <View style={styles.container}>
-            <Text>Formulario de Login</Text>
-            <Text style={styles.texto}>Ingrese su Email</Text>
-            <TextInput  style={styles.inputStyle}
-            keyboardType="email-address"
-                placeholder="email"
-                onChangeText={text => setEmail(text)}
-                value={email}></TextInput>
-            <Text style={styles.texto}>Ingrese su Password</Text>
-            <TextInput style={styles.inputStyle}
-             keyboardType="default"
-                placeholder="Password"
-                secureTextEntry={true}
-                onChangeText={text => setPassword(text)}
-                value={password}></TextInput>
-            <Pressable style={styles.clickeableForm} onPress={() => onSubmit(email, password)}><Text style={styles.textoBoton}>Iniciar Sesion</Text></Pressable>
-            <Text>No tenes cuenta?</Text>
-            <Pressable style={styles.clickeable} onPress={() => props.navigation.navigate("Register")}><Text style={styles.texto}>Ir al registro</Text></Pressable>
-            <br></br>
-            <Pressable style={styles.clickeable} onPress={() => props.navigation.navigate("HomeMenu")}><Text style={styles.texto}>Ir al Menu</Text></Pressable>
-        </View>
+
+    <Text style={styles.title}>Login</Text>
+
+    <TextInput
+        style={styles.inputStyle}
+        placeholder="Ingresá tu email"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={text => setEmail(text)}
+    />
+
+    <TextInput
+        style={styles.inputStyle}
+        placeholder="Ingresá tu password"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={text => setPassword(text)}
+    />
+
+    <Pressable
+        style={styles.clickeableForm}
+        onPress={() => onSubmit(email, password)}
+    >
+        <Text style={styles.textoBoton}>Iniciar sesión</Text>
+    </Pressable>
+
+    <Text style={styles.textoSecundario}>
+        ¿No tenés cuenta?
+    </Text>
+
+    <Pressable
+        style={styles.clickeable}
+        onPress={() => props.navigation.navigate("Register")}
+    >
+        <Text style={styles.textoBoton}>Ir al registro</Text>
+    </Pressable>
+
+</View>
     )
 
 }
 const styles = StyleSheet.create({
     container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20
-},
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20,
+        backgroundColor: "#f5f5f5",
+    },
 
-inputStyle: {
-    width: 300,
-    height: 40,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 6,
-    paddingHorizontal: 10,
-    marginVertical: 10
-},
+    title: {
+        fontSize: 30,
+        fontWeight: "bold",
+        marginBottom: 30,
+        color: "#000",
+    },
 
-clickeable: {
-    width: 300,
-    backgroundColor: "#3048ce",
-    padding: 10,
-    borderRadius: 4,
-    alignItems: "center",
-    marginTop: 10
-},
+    texto: {
+        width: 300,
+        fontSize: 16,
+        marginBottom: 5,
+        color: "#000",
+    },
 
-clickeableForm: {
-    width: 300,
-    backgroundColor: "#28a745",
-    padding: 10,
-    borderRadius: 4,
-    alignItems: "center",
-    marginTop: 10
-}
-})
+    inputStyle: {
+        width: 300,
+        height: 45,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 8,
+        backgroundColor: "#fff",
+        paddingHorizontal: 10,
+        marginVertical: 8,
+    },
+
+    clickeableForm: {
+        width: 300,
+        backgroundColor: "#28a745",
+        padding: 12,
+        borderRadius: 8,
+        alignItems: "center",
+        marginTop: 15,
+    },
+
+    clickeable: {
+        width: 300,
+        backgroundColor: "#3048ce",
+        padding: 12,
+        borderRadius: 8,
+        alignItems: "center",
+        marginTop: 10,
+    },
+
+    textoBoton: {
+        color: "#fff",
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+});
 
 export default Login

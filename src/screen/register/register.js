@@ -3,11 +3,14 @@ import {View, Text, TextInput, Pressable, StyleSheet} from "react-native";
 import { auth } from "../../firebase/config";
 
 
+
 export default function Register() {
 
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [register, setRegister] = useState(false);
+    const [registerError, setRegisterError] = useState("");
 
     function onSubmit (email, pass) {
    auth.createUserWithEmailAndPassword(email, pass)
@@ -70,4 +73,55 @@ export default function Register() {
         </View>
     );
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20,
+        backgroundColor: "#f5f5f5",
+    },
 
+    title: {
+        fontSize: 30,
+        fontWeight: "bold",
+        marginBottom: 30,
+        color: "#000000",
+    },
+
+    input: {
+        width: 300,
+        height: 45,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 8,
+        backgroundColor: "#fff",
+        paddingHorizontal: 10,
+        marginVertical: 8,
+    },
+
+    button: {
+        width: 300,
+        backgroundColor: "#28a745",
+        padding: 12,
+        borderRadius: 8,
+        alignItems: "center",
+        marginTop: 15,
+    },
+
+    buttonText: {
+        color: "#fff",
+        fontSize: 18,
+        fontWeight: "bold",
+    },
+
+    infoBox: {
+        width: 300,
+        marginTop: 25,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        borderRadius: 8,
+        backgroundColor: "#fff",
+    },
+});

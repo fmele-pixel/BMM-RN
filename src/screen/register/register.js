@@ -54,7 +54,7 @@ export default function Register() {
 
             <Pressable
                 style={styles.button}
-                onPress={onSubmit}
+                onPress={() => onSubmit(email, password)}
             >
                 <Text style={styles.buttonText}>
                     Registrate

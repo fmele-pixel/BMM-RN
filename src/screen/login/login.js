@@ -53,7 +53,7 @@ function Login(props) {
                 value={password}></TextInput>
             <Pressable style={styles.clickeableForm} onPress={() => onSubmit(email, password)}><Text style={styles.textoBoton}>Iniciar Sesion</Text></Pressable>
             <Text>No tenes cuenta?</Text>
-            <Pressable style={styles.clickeable} onPress={() => props.navigation.navigate("register")}><Text style={styles.texto}>Ir al registro</Text></Pressable>
+            <Pressable style={styles.clickeable} onPress={() => props.navigation.navigate("Register")}><Text style={styles.texto}>Ir al registro</Text></Pressable>
             <br></br>
             <Pressable style={styles.clickeable} onPress={() => props.navigation.navigate("HomeMenu")}><Text style={styles.texto}>Ir al Menu</Text></Pressable>
         </View>

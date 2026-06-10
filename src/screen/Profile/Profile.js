@@ -22,13 +22,15 @@ const styles = StyleSheet.create({
     alignItems:"center"
   },
   title:{
-    fontSize:24,
-    marginBottom:20
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20
   },
   button:{
-    backgroundColor:"red",
-    padding:10,
-    borderRadius:5
+    backgroundColor:"#3048ce",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 6
   },
   textButton:{
     color:"#fff"

@@ -1,11 +1,11 @@
 import { Text, View, Pressable, Image, FlatList, StyleSheet } from "react-native"
 import { useEffect, useState } from "react"
-import { db, auth } from "../firebase/config";
-import Posteo from "../components/Posteo"
+import { db, auth } from "../../firebase/config";
+import Posteo from "../../componentes/posteo"
 
 
 function Home(props) {
-  const [comentario, setComentario] = useState("")
+  const [comentario, setComentario] = useState([])
   useEffect(() => {
     db.collection("posteo").onSnapshot(
       docs => {
@@ -29,7 +29,7 @@ function Home(props) {
       <FlatList
         data={comentario}
         keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => <Post id={item.id} posteoUsu={item.posteoUsuario} navigation={props.navigation} />}
+        renderItem={({ item }) => <Posteo id={item.id} posteoUsu={item.posteoUsuario} navigation={props.navigation} />}
       />
 
 

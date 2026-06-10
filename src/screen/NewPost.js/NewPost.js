@@ -1,4 +1,4 @@
-import { db, auth } from "../firebase/config"
+import { db, auth } from "../../firebase/config"
 import { Text, View, Pressable, FlatList, StyleSheet, TextInput } from "react-native"
 import { useState } from "react"
 

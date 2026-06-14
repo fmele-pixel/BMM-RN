@@ -33,12 +33,12 @@ function Posteo({ id, posteoUsu, navigation }) {
 
                 <Pressable onPress={handleLike}>
                     <Text style={[styles.like, yaLikeo && styles.likeActivo]}>
-                        ❤️ {likes.length} Me gusta
+                        {likes.length} Me gusta
                     </Text>
                 </Pressable>
 
                 <Pressable onPress={() => navigation.navigate("Comentarios", { postId: id })}>
-                    <Text style={styles.comentar}>💬 Comentar</Text>
+                    <Text style={styles.comentar}>Comentar</Text>
                 </Pressable>
 
             </View>
@@ -47,6 +47,51 @@ function Posteo({ id, posteoUsu, navigation }) {
     )
 }
 
-
+const styles = StyleSheet.create({
+    card: {
+        backgroundColor: "#fff",
+        borderRadius: 8,
+        padding: 14,
+        marginBottom: 12,
+        borderWidth: 1,
+        borderColor: "#e0e0e0",
+    },
+    owner: {
+        fontWeight: "bold",
+        fontSize: 14,
+        color: "#333",
+        marginBottom: 6,
+    },
+    descripcion: {
+        fontSize: 15,
+        color: "#444",
+        marginBottom: 10,
+    },
+    imagen: {
+        width: "100%",
+        height: 200,
+        borderRadius: 6,
+        marginBottom: 10,
+    },
+    acciones: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        borderTopWidth: 1,
+        borderTopColor: "#f0f0f0",
+        paddingTop: 10,
+    },
+    like: {
+        fontSize: 14,
+        color: "#888",
+    },
+    likeActivo: {
+        color: "#e74c3c",
+        fontWeight: "bold",
+    },
+    comentar: {
+        fontSize: 14,
+        color: "#3048ce",
+    },
+})
 
 export default Posteo

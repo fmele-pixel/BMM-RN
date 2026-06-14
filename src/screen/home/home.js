@@ -7,7 +7,7 @@ import Posteo from "../../componentes/posteo"
 function Home(props) {
   const [comentario, setComentario] = useState([])
   useEffect(() => {
-    db.collection("posteo").onSnapshot(
+    db.collection("posts").orderBy("createdAt", "desc").onSnapshot(
       docs => {
         let posteos = []
         docs.forEach(doc => {

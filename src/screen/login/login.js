@@ -51,6 +51,7 @@ function Login(props) {
     <TextInput
         style={styles.inputStyle}
         placeholder="Ingresá tu password"
+        keyboardType="default"
         secureTextEntry={true}
         value={password}
         onChangeText={text => setPassword(text)}

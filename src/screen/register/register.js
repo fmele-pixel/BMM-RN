@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {View, Text, TextInput, Pressable, StyleSheet} from "react-native";
 import { auth } from "../../firebase/config";
 
-
-
 export default function Register() {
 
     const [email, setEmail] = useState("");
@@ -12,15 +10,19 @@ export default function Register() {
     const [register, setRegister] = useState(false);
     const [registerError, setRegisterError] = useState("");
 
-    function onSubmit (email, pass) {
-   auth.createUserWithEmailAndPassword(email, pass)
-    .then( response => {
-        setRegister(true); 
-     })     
-    .catch( error => {
-        setRegisterError('Fallo en el registro.')
-    })
- }
+    function onSubmit() {
+
+        auth.createUserWithEmailAndPassword(auth, email, password)
+            .then((response) => {
+                setRegister(true);
+                setRegisterError("");
+                console.log("Usuario registrado:", response.user);
+            })
+            .catch((error) => {
+                setRegisterError(error.message);
+                console.log(error);
+            });
+    }
 
 
     return (
@@ -57,12 +59,25 @@ export default function Register() {
 
             <Pressable
                 style={styles.button}
-                onPress={() => onSubmit(email, password)}
+                onPress={onSubmit}
             >
                 <Text style={styles.buttonText}>
                     Registrate
                 </Text>
             </Pressable>
+
+            {registerError !== "" && (
+                <Text style={{ color: "red", marginTop: 10 }}>
+                    {registerError}
+                </Text>
+            )}
+
+            {register && (
+                <Text style={{ color: "green", marginTop: 10 }}>
+                    Registro exitoso
+                </Text>
+            )}
+
 
             <View style={styles.infoBox}>
                 <Text>Email: {email}</Text>

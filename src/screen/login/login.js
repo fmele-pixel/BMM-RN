@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
 
     clickeableForm: {
         width: 300,
-        backgroundColor: "#28a745",
+        backgroundColor: "#285fa7",
         padding: 12,
         borderRadius: 8,
         alignItems: "center",
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
 
     clickeable: {
         width: 300,
-        backgroundColor: "#3048ce",
+        backgroundColor: "#ce5230",
         padding: 12,
         borderRadius: 8,
         alignItems: "center",

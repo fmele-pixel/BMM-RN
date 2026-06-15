@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {View, Text, TextInput, Pressable, StyleSheet} from "react-native";
 import { auth } from "../../firebase/config";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Register() {
 
@@ -9,20 +10,19 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [register, setRegister] = useState(false);
     const [registerError, setRegisterError] = useState("");
+    const navigation = useNavigation();
 
     function onSubmit() {
-
-        auth.createUserWithEmailAndPassword(auth, email, password)
-            .then((response) => {
-                setRegister(true);
-                setRegisterError("");
-                console.log("Usuario registrado:", response.user);
-            })
-            .catch((error) => {
-                setRegisterError(error.message);
-                console.log(error);
-            });
-    }
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+            setRegister(true);
+            setRegisterError("");
+            navigation.navigate("Login");
+        })
+        .catch(() => {
+            setRegisterError("Fallo en el registro.");
+        });
+}
 
 
     return (

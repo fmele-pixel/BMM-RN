@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { db, auth } from "../firebase/config"
 import { View, Text, Pressable } from "react-native"
 import firebase from "firebase"
-import Comentario from "../screens/Comentario"
 import { StyleSheet } from "react-native"
 
 function Post(props) {
@@ -71,3 +70,38 @@ function Post(props) {
 
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: "#ddd",
+    },
+    autor: {
+        fontWeight: "bold",
+        marginBottom: 4,
+    },
+    descripcion: {
+        marginBottom: 8,
+    },
+    seccionLikes: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 8,
+        marginBottom: 8,
+    },
+    botonLike: {
+        padding: 6,
+    },
+    emoji: {
+        fontSize: 20,
+    },
+    comentario: {
+        paddingVertical: 6,
+    },
+    textComentario: {
+        color: "#3048ce",
+    },
+})
+
+export default Post

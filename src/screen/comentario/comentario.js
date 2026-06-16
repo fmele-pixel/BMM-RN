@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, FlatList, StyleSheet, Pressable } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { db, auth } from '../firebase/config';
+import { db, auth } from "../../firebase/config";
 
 const Tab = createBottomTabNavigator()
 
@@ -52,7 +52,7 @@ function Comentarios(props) {
                 onChangeText={(text) => setNewComment(text)}
                 value={newComment}></TextInput>
             <Pressable style={styles.clickeable} onPress={() => Post()}><Text style={styles.texto}>Enviar comentario</Text></Pressable>
-            <view style={styles.seccionComentarios}>
+            <View style={styles.seccionComentarios}>
                 <Text style={styles.texto}>Comentarios previos:</Text>
                 <FlatList
                     style={styles.comentario}
@@ -60,7 +60,7 @@ function Comentarios(props) {
                     keyExtractor={item => item.id.toString()}
                     renderItem={({ item }) => <Text style={styles.textoComent}>{item.comentariosUsus.descripcion}</Text>}
                 />
-            </view>
+            </View>
         </View>
 
     )

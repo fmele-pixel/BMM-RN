@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {View, Text, TextInput, Pressable, StyleSheet} from "react-native";
-import { auth } from "../../firebase/config";
+import { auth, db } from "../../firebase/config";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Register() {
@@ -13,16 +13,27 @@ export default function Register() {
     const navigation = useNavigation();
 
     function onSubmit() {
-    auth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
-            setRegister(true);
-            setRegisterError("");
-            navigation.navigate("Login");
-        })
-        .catch(() => {
-            setRegisterError("Fallo en el registro.");
-        });
-}
+        if (email === "" || username === "" || password === "") {
+            setRegisterError("Completá todos los campos.");
+            return;
+        }
+        auth.createUserWithEmailAndPassword(email, password)
+            .then(response => {
+                return db.collection("users").add({
+                    owner: response.user.email,
+                    name: username,
+                    createdAt: Date.now(),
+                });
+            })
+            .then(() => {
+                setRegister(true);
+                setRegisterError("");
+                navigation.navigate("Login");
+            })
+            .catch(error => {
+                setRegisterError(error.message);
+            });
+    }
 
 
     return (
@@ -78,13 +89,6 @@ export default function Register() {
                 </Text>
             )}
 
-
-            <View style={styles.infoBox}>
-                <Text>Email: {email}</Text>
-                <Text>Username: {username}</Text>
-                <Text>Password: {password}</Text>
-            </View>
-
         </View>
     );
 }
@@ -128,15 +132,5 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 18,
         fontWeight: "bold",
-    },
-
-    infoBox: {
-        width: 300,
-        marginTop: 25,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 8,
-        backgroundColor: "#fff",
     },
 });

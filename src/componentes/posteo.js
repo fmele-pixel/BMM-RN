@@ -4,21 +4,21 @@ import { View, Text, Pressable } from "react-native"
 import firebase from "firebase"
 import { StyleSheet } from "react-native"
 
-function Post(props) {
-    const [cantLike, setCantLike] = useState(0)
-    const [likeado, setLikeado] = useState(false)
+function Posteo(props) {
+    const [cantidadLikes, setCantidadLikes] = useState(0)
+    const [meGusta, setMeGusta] = useState(false)
 
     useEffect(() => {
-        const likesArray = props.posteoUsu.likes || []
-        setCantLike(likesArray.length)
-        if (auth.currentUser !== null && likesArray.includes(auth.currentUser.email)) {
-            setLikeado(true)
+        const listaLikes = props.posteoUsu.likes || []
+        setCantidadLikes(listaLikes.length)
+        if (auth.currentUser !== null && listaLikes.includes(auth.currentUser.email)) {
+            setMeGusta(true)
         } else {
-            setLikeado(false)
+            setMeGusta(false)
         }
     }, [props.posteoUsu])
 
-    function Like() {
+    function darLike() {
         if (auth.currentUser === null){
             alert("tenes que iniciar sesion para likear")
             return
@@ -29,11 +29,11 @@ function Post(props) {
                 likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email)
             })
             .then(() => {
-                setCantLike(cantLike + 1)
-                setLikeado(true)
+                setCantidadLikes(cantidadLikes + 1)
+                setMeGusta(true)
             })
     }
-    function DisLike() {
+    function quitarLike() {
         if (auth.currentUser === null){
             alert("tenes que iniciar sesion para likear")
             return
@@ -44,8 +44,8 @@ function Post(props) {
                 likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email)
             })
             .then(() => {
-                setCantLike(cantLike - 1)
-                setLikeado(false)
+                setCantidadLikes(cantidadLikes - 1)
+                setMeGusta(false)
             })
     }
     
@@ -56,13 +56,13 @@ function Post(props) {
             <Text style={styles.autor}>Hecho por: {props.posteoUsu.owner}</Text>
             <Text style={styles.descripcion}>{props.posteoUsu.descripcionPost}</Text>
             <View style={styles.seccionLikes}>{
-                likeado === true ?
-                <Pressable onPress={() => DisLike()} style={styles.botonLike}><Text style={styles.emoji}>👎</Text></Pressable>
-                    
+                meGusta === true ?
+                <Pressable onPress={() => quitarLike()} style={styles.botonLike}><Text style={styles.emoji}>👎</Text></Pressable>
+
                 :
-                <Pressable onPress={() => Like() }style={styles.botonLike}><Text style={styles.emoji}>👍</Text></Pressable>
+                <Pressable onPress={() => darLike() }style={styles.botonLike}><Text style={styles.emoji}>👍</Text></Pressable>
             }
-            <Text>Likes: {cantLike}</Text>
+            <Text>Likes: {cantidadLikes}</Text>
             </View>
             <Pressable style={styles.comentario} onPress={() => props.navigation.navigate("Comentario", {params:{id:props.id}})}><Text style={styles.textComentario}>💬 Ver comentarios</Text></Pressable>
         </View>
@@ -104,4 +104,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Post
+export default Posteo

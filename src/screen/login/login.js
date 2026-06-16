@@ -1,37 +1,40 @@
-import { Text, View, Pressable, Image, FlatList, StyleSheet, TextInput } from "react-native"
-import HomeMenu from "../../componentes/HomeMenu"
-import { useState } from "react"
+import { Text, View, Pressable, StyleSheet, TextInput } from "react-native"
+import { useState, useEffect } from "react"
 import { auth } from "../../firebase/config"
 
 function Login(props) {
-    
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [login, setLogin] = useState(false)
-    const [loginError, setLoginError] = useState("")
 
-    function onSubmit(email, password) {
-        if (password.length < 8){
-            alert("La contrase;a es muy corta")
+    const [email, setEmail] = useState("")
+    const [contrasena, setContrasena] = useState("")
+    const [errorLogin, setErrorLogin] = useState("")
+
+    useEffect(() => {
+        const desuscribir = auth.onAuthStateChanged(usuario => {
+            if (usuario) {
+                props.navigation.navigate("HomeMenu")
+            }
+        })
+        return desuscribir
+    }, [])
+
+    function iniciarSesion(email, contrasena) {
+        if (contrasena.length < 6){
+            alert("La contraseña es muy corta")
             return
         }
-        auth.signInWithEmailAndPassword(email, password)
-        .then(response => {
-            setLogin(true)
+        auth.signInWithEmailAndPassword(email, contrasena)
+        .then(respuesta => {
             props.navigation.navigate("HomeMenu")
         })
         .catch(error => {
-            console.log(error);
-            
             if(error.code === "auth/invalid-email"){
                 alert("Esta mal escrito el mail")
             }
             if(error.code === "auth/internal-error"){
                 alert("Credenciales invalidas")
             }
-            setLoginError("Credenciales invalidas")
+            setErrorLogin("Credenciales invalidas")
         })
-
     }
 
 
@@ -53,16 +56,20 @@ function Login(props) {
         placeholder="Ingresá tu password"
         keyboardType="default"
         secureTextEntry={true}
-        value={password}
-        onChangeText={text => setPassword(text)}
+        value={contrasena}
+        onChangeText={text => setContrasena(text)}
     />
 
     <Pressable
         style={styles.clickeableForm}
-        onPress={() => onSubmit(email, password)}
+        onPress={() => iniciarSesion(email, contrasena)}
     >
         <Text style={styles.textoBoton}>Iniciar sesión</Text>
     </Pressable>
+
+    {errorLogin !== "" && (
+        <Text style={styles.error}>{errorLogin}</Text>
+    )}
 
     <Text style={styles.textoSecundario}>
         ¿No tenés cuenta?
@@ -135,6 +142,13 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 18,
         fontWeight: "bold",
+    },
+
+    error: {
+        color: "red",
+        marginTop: 10,
+        width: 300,
+        textAlign: "center",
     },
 });
 

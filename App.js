@@ -1,5 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import Register from './src/screen/register/register';
 import Login from './src/screen/login/login';
 import HomeMenu from './src/componentes/HomeMenu';
@@ -20,12 +18,3 @@ export default function App() {
   </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

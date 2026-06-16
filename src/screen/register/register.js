@@ -1,37 +1,35 @@
 import React, { useState } from "react";
 import {View, Text, TextInput, Pressable, StyleSheet} from "react-native";
 import { auth, db } from "../../firebase/config";
-import { useNavigation } from "@react-navigation/native";
 
-export default function Register() {
+export default function Register(props) {
 
     const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [register, setRegister] = useState(false);
-    const [registerError, setRegisterError] = useState("");
-    const navigation = useNavigation();
+    const [usuario, setUsuario] = useState("");
+    const [contrasena, setContrasena] = useState("");
+    const [registrado, setRegistrado] = useState(false);
+    const [errorRegistro, setErrorRegistro] = useState("");
 
-    function onSubmit() {
-        if (email === "" || username === "" || password === "") {
-            setRegisterError("Completá todos los campos.");
+    function registrarUsuario() {
+        if (email === "" || usuario === "" || contrasena === "") {
+            setErrorRegistro("Completá todos los campos.");
             return;
         }
-        auth.createUserWithEmailAndPassword(email, password)
-            .then(response => {
+        auth.createUserWithEmailAndPassword(email, contrasena)
+            .then(respuesta => {
                 return db.collection("users").add({
-                    owner: response.user.email,
-                    name: username,
+                    owner: respuesta.user.email,
+                    name: usuario,
                     createdAt: Date.now(),
                 });
             })
             .then(() => {
-                setRegister(true);
-                setRegisterError("");
-                navigation.navigate("Login");
+                setRegistrado(true);
+                setErrorRegistro("");
+                props.navigation.navigate("Login");
             })
             .catch(error => {
-                setRegisterError(error.message);
+                setErrorRegistro(error.message);
             });
     }
 
@@ -55,8 +53,8 @@ export default function Register() {
                 style={styles.input}
                 placeholder="Ingresá tu usuario"
                 keyboardType="default"
-                value={username}
-                onChangeText={(texto) => setUsername(texto)}
+                value={usuario}
+                onChangeText={(texto) => setUsuario(texto)}
             />
 
             <TextInput
@@ -64,26 +62,26 @@ export default function Register() {
                 placeholder="Ingresá tu password"
                 keyboardType="default"
                 secureTextEntry={true}
-                value={password}
-                onChangeText={(texto) => setPassword(texto)}
+                value={contrasena}
+                onChangeText={(texto) => setContrasena(texto)}
             />
 
             <Pressable
                 style={styles.button}
-                onPress={onSubmit}
+                onPress={registrarUsuario}
             >
                 <Text style={styles.buttonText}>
                     Registrate
                 </Text>
             </Pressable>
 
-            {registerError !== "" && (
+            {errorRegistro !== "" && (
                 <Text style={{ color: "red", marginTop: 10 }}>
-                    {registerError}
+                    {errorRegistro}
                 </Text>
             )}
 
-            {register && (
+            {registrado && (
                 <Text style={{ color: "green", marginTop: 10 }}>
                     Registro exitoso
                 </Text>

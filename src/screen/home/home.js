@@ -1,63 +1,49 @@
-import { Text, View, Pressable, Image, FlatList, StyleSheet } from "react-native"
+import { View, FlatList, StyleSheet } from "react-native"
 import { useEffect, useState } from "react"
-import { db, auth } from "../../firebase/config";
+import { db } from "../../firebase/config"
 import Posteo from "../../componentes/posteo"
 
-
 function Home(props) {
-  const [comentario, setComentario] = useState([])
+  const [posteos, setPosteos] = useState([])
+
   useEffect(() => {
-    db.collection("posts").orderBy("createdAt", "desc").onSnapshot(
-      docs => {
-        let posteos = []
+    db.collection("posts")
+      .orderBy("createdAt", "desc")
+      .onSnapshot(docs => {
+        let lista = []
         docs.forEach(doc => {
-          posteos.push({
+          lista.push({
             id: doc.id,
             posteoUsuario: doc.data()
           })
         })
-        setComentario(posteos)
-
-      }
-    )
+        setPosteos(lista)
+      })
   }, [])
 
   return (
-
-    <View>
-      <Text>Pagina de inicio</Text>
+    <View style={styles.container}>
       <FlatList
-        data={comentario}
+        data={posteos}
         keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => <Posteo id={item.id} posteoUsu={item.posteoUsuario} navigation={props.navigation} />}
+        renderItem={({ item }) => (
+          <Posteo
+            id={item.id}
+            posteoUsu={item.posteoUsuario}
+            navigation={props.navigation}
+          />
+        )}
       />
-
-
     </View>
   )
-
 }
+
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    padding: 10,
     flex: 1,
-    width: "100%",
-    alignContent: "center",
-    flexWrap: "wrap",
-    textAlign: "center"
+    backgroundColor: "#f5f5f5",
+    paddingVertical: 8,
   },
-  clickeable: {
-    padding: 4,
-    backgroundColor: "#3048ce",
-    marginBottom: 10,
-    borderRadius: 4,
-    textAlign: "center"
-  },
-  texto: {
-    fontWeight: "bold",
-    textAlign: "center"
-  }
 })
 
 export default Home
